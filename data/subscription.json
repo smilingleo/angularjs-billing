@@ -1,0 +1,14 @@
+{
+    "success": true,
+    "subscription": {
+        "zid": "o28u32u3498298723948729374928734",
+        "type": "Termed",
+        "startDate": "2014-5-5",
+        "initialTerm": 12,
+        "status": "Active",
+        "chosePlan": "Bronze",
+        "planId": "2c92c0f845df71220145fd1bbed66a84",
+        "users": 10,
+        "addons": ["2c92c0f845df71270145fd23891c6b4f"]
+    }
+}

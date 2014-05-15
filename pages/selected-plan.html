@@ -1,0 +1,26 @@
+<h4>Your Plan: {{ chosePlan().name }}</h4>
+
+<h5>One Time Charges</h5>
+<dl class="dl-horizontal" ng-repeat="charge in chosePlan().charges" ng-if="charge.type == 'OneTime'">
+    <dt>{{ charge.name }}</dt>
+    <dd>{{ charge.pricing }}</dd>
+</dl>
+<h5>Recurring Charges</h5>
+<dl class="dl-horizontal" ng-repeat="charge in chosePlan().charges" ng-if="charge.type == 'Recurring'">
+    <dt>{{ charge.name }}</dt>
+    <dd>{{ charge.pricing }}</dd>
+</dl>
+
+<dl class="dl-horizontal">
+    <dt>Your user amount:</dt>
+    <dd>{{ chosePlan().qty }}</dd>
+</dl>
+
+<h4>Chose Addon: </h4>
+<div ng-repeat="addon in choseAddon()">
+    <h5>{{ addon.name }}</h5>
+    <dl class="dl-horizontal" ng-repeat="charge in addon.charges">
+        <dt>{{ charge.name }}</dt>
+        <dd>{{ charge.pricing }}</dd>
+    </dl>
+</div>

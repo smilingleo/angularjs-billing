@@ -1,0 +1,56 @@
+<div class="row span12">
+    <h2>Account Summary</h2>
+</div>
+
+<div class="row">
+    <div class="span3">
+        <!-- 'src' has to be a variable -->
+        <ng-include src="sideBarUrl"></ng-include>
+    </div>
+    <div class="span8 offset1">
+        <section id="subscription_info">
+            <div class="page-header">
+                <h4>Subscription Information</h4>
+            </div>
+
+            <dl class="dl-horizontal">
+                <dt>Subscription Type</dt>
+                <dd>{{ subscription.type }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Start Date</dt>
+                <dd>{{ subscription.startDate }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Initial Term</dt>
+                <dd>{{ subscription.initialTerm }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Status</dt>
+                <dd>{{ subscription.status }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Rate Plan</dt>
+                <dd>{{ subscription.chosePlan }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Users</dt>
+                <dd>{{ subscription.users }}</dd>
+            </dl>
+        </section>
+
+        <section id="upgrade_section">
+            <div class="page-header">
+                <h4>Upgrade</h4>
+            </div>
+            <ng-include src="planListTableUrl"></ng-include>
+        </section>
+
+        <section id="addon_section">
+            <div class="page-header">
+                <h4>Add-Ons</h4>
+            </div>
+            <ng-include src="addonListTableUrl"></ng-include>
+        </section>
+    </div>
+</div>

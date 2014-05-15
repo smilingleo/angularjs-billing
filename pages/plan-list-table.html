@@ -1,0 +1,29 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Plan</th>
+        <th>One-Time Charges</th>
+        <th>Recurring Charges</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="plan in plans">
+        <td>{{ plan.name }} </td>
+        <td>
+            <ul>
+                <li ng-repeat="charge in plan.charges" ng-if="charge.type == 'OneTime'">{{ charge.pricing }}</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li ng-repeat="charge in plan.charges" ng-if="charge.type == 'Recurring'">{{ charge.pricing }}</li>
+            </ul>
+        </td>
+        <td>
+            <span ng-if="isSelectedPlan(plan.zid)">Current Plan</span>
+            <button class="btn btn-success" ng-if="!isSelectedPlan(plan.zid)" ng-click="choosePlan(plan)">Upgrade</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

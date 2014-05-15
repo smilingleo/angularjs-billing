@@ -1,0 +1,19 @@
+{
+    "success": true,
+    "creditCards": [
+        {
+            "zid": "ff808081298c6e5401298c76f29a006d",
+            "defaultPaymentMethod": true,
+            "cardType": "Visa",
+            "cardNumber": "************1111",
+            "expirationDate": "07/2015"
+        },
+        {
+            "zid": "f2808081298c6e5401298c76f29a006d",
+            "defaultPaymentMethod": false,
+            "cardType": "MasterCard",
+            "cardNumber": "************1111",
+            "expirationDate": "11/2016"
+        }
+    ]
+}

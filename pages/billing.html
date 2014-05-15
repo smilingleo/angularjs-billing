@@ -1,0 +1,97 @@
+<div class="row span12">
+    <h2>Enter Billing Information</h2>
+</div>
+
+<div class="row span12">
+    <div class="span6">
+        <form id="cc_form" class="form-horizontal" ng-submit="makeCorsRequest()">
+
+            <div class="control-group">
+                <label class="control-label" for="creditCardType">Credit Card Type</label>
+                <div class="controls">
+                    <input type="text" name="creditCardType" id="creditCardType" placeholder="{{card.creditCardType}}" ng-model="card.creditCardType">
+                    <label class="text-error" id="field_1_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="creditCardNumber">Credit Card Number</label>
+                <div class="controls">
+                    <input type="text" name="creditCardNumber" id="creditCardNumber" placeholder="{{card.creditCardNumber}}" ng-model="card.creditCardNumber">
+                    <label class="text-error" id="field_2_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="expirationMonth">Expiration</label>
+                <div class="controls form-inline">
+                        <select name="expirationMonth" id="expirationMonth" class="input-small" ng-model="card.expirationMonth" ng-options="m for m in monthes">></select>
+                        <select name="expirationYear" id="expirationYear" class="input-small" ng-model="card.expirationYear" ng-options="y for y in years"></select>
+                        <label class="text-error" id="field_3_error"></label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="securityCode">Security Code</label>
+                <div class="controls">
+                    <input type="text" name="securityCode" id="securityCode" placeholder="{{card.securityCode}}" ng-model="card.securityCode">
+                    <label class="text-error" id="field_4_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="cardHolderName" >Card Holder Name</label>
+                <div class="controls">
+                    <input type="text" name="cardHolderName" id="cardHolderName" placeholder="{{card.cardHolderName}}" ng-model="card.cardHolderName">
+                    <label class="text-error" id="field_5_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="country">Country</label>
+                <div class="controls">
+                    <select name="country" id="country" ng-model="card.country" ng-options="c for c in countries">></select>
+                    <label class="text-error" id="field_6_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="address1" >Address 1</label>
+                <div class="controls">
+                    <input type="text" name="address1" id="address1" placeholder="{{card.address1}}" ng-model="card.address1">
+                    <label class="text-error" id="field_7_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="address2" >Address 2</label>
+                <div class="controls">
+                    <input type="text" name="address2" id="address2" placeholder="{{card.address2}}" ng-model="card.address2">
+                    <label class="text-error" id="field_8_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="city" >City</label>
+                <div class="controls">
+                    <input type="text" name="city" id="city" placeholder="{{card.city}}" ng-model="card.city">
+                    <label class="text-error" id="field_9_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="state" >State</label>
+                <div class="controls">
+                    <input type="text" name="state" id="state" placeholder="{{card.state}}" ng-model="card.state">
+                    <label class="text-error" id="field_10_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="postCode" >Postal Code</label>
+                <div class="controls">
+                    <input type="text" name="postCode" id="postCode" placeholder="{{card.postCode}}" ng-model="card.postCode">
+                    <label class="text-error" id="field_11_error"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn" type="submit" name="submit" value="Subscribe"></div>
+            </div>
+        </form>
+    </div>
+    <div class="span5 plan-box box4" ng-controller="SelectedPlanCtrl">
+        <ng-include src="pageUrl"></ng-include>
+    </div>
+</div>

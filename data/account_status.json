@@ -1,0 +1,10 @@
+{
+    "success": true,
+    "accountStatus":{
+        "balance": "$0",
+        "status": "Active",
+        "lastInvoiceDate": "2014-5-5",
+        "lastPayment": "$100",
+        "lastPaymentDate": "2014-5-5"
+    }
+}

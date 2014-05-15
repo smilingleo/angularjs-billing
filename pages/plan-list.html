@@ -1,0 +1,32 @@
+<div class="row span12">
+    <h2>Select a plan</h2>
+</div>
+
+<div class="row span12 plan-box">
+    <div class="span3 box{{$index + 1}}" ng-repeat="plan in plans">
+        <h3>{{ plan.name }}</h3>
+        <p>{{ plan.description }}</p>
+
+        <div class="pricing-plan">
+
+            <strong>One Time Charge:</strong>
+            <ul>
+                <li ng-repeat="charge in plan.charges" ng-if="charge.type == 'OneTime'">{{ charge.pricing }}</li>
+            </ul>
+
+            <strong>Recurring Charges:</strong>
+            <ul>
+                <li ng-repeat="charge in plan.charges" ng-if="charge.type == 'Recurring'">{{ charge.pricing }}</li>
+            </ul>
+
+            <div class="row-fluid">
+                <label>Number of Users&nbsp;&nbsp;&nbsp;
+                    <input type="text" class="input-mini" ng-model="plan.qty">
+                </label>
+            </div>
+        </div>
+        <a href="#/addons">
+            <input type="button" class="btn" ng-click="choosePlan(plan)" value="Select">
+        </a>
+    </div>
+</div>

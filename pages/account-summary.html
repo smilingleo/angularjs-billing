@@ -1,0 +1,100 @@
+<div class="row span12">
+    <h2>Account Summary</h2>
+</div>
+
+<div class="row">
+    <div class="span3">
+        <!-- 'src' has to be a variable -->
+        <ng-include src="sideBarUrl"></ng-include>
+    </div>
+    <div class="span8 offset1">
+        <section id="account_status">
+            <div class="page-header">
+                <h4>Account Status</h4>
+            </div>
+            <dl class="dl-horizontal">
+                <dt>Account Balance</dt>
+                <dd>{{ accountStatus.balance }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Account Status</dt>
+                <dd>{{ accountStatus.status }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Last Invoice Date</dt>
+                <dd>{{ accountStatus.lastInvoiceDate }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Last Payment</dt>
+                <dd>{{ accountStatus.lastPayment }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Last Payment Date</dt>
+                <dd>{{ accountStatus.lastPaymentDate }}</dd>
+            </dl>
+        </section>
+        <section id="personal_info">
+            <div class="page-header">
+                <h4>Personal Information</h4>
+            </div>
+            <dl class="dl-horizontal">
+                <dt></dt>
+                <dd></dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt></dt>
+                <dd></dd>
+            </dl>
+        </section>
+        <section id="billing_info">
+            <div class="page-header">
+                <h4>Billing Information</h4>
+            </div>
+            <dl class="dl-horizontal">
+                <dt>Name</dt>
+                <dd>{{ billingInfo.firstName + " " + billingInfo.lastName }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Country</dt>
+                <dd>{{ billingInfo.country }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Address 1</dt>
+                <dd>{{ billingInfo.address1 }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Address 2</dt>
+                <dd>{{ billingInfo.address2 }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>City</dt>
+                <dd>{{ billingInfo.city }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>State</dt>
+                <dd>{{ billingInfo.state }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Postal Code</dt>
+                <dd>{{ billingInfo.postCode }}</dd>
+            </dl>
+        </section>
+        <section id="payment_info">
+            <div class="page-header">
+                <h4>Payment Information</h4>
+            </div>
+            <div class="row" ng-repeat="card in creditCards">
+                <div class="span2">{{ card.cardType }}</div>
+                <div class="span2">{{ card.cardNumber }}</div>
+                <div class="span1">{{ card.expirationDate }}</div>
+                <div class="span2">
+                    <span ng-if="card.defaultPaymentMethod">Default</span>
+                    <a ng-click="" ng-if="!card.defaultPaymentMethod">Make Default</a>
+                </div>
+                <div class="span1">
+                    <a ng-click="" ng-if="!card.defaultPaymentMethod">Remove</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+{
+    "success": true,
+    "billingInfo": {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "address1": "address1",
+        "address2": "address2",
+        "city": "San Francisco",
+        "county": null,
+        "state": "California",
+        "postCode": null,
+        "country": "United States"
+    }
+}

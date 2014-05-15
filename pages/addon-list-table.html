@@ -1,0 +1,21 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Add-On</th>
+        <th>One-Time Charges</th>
+        <th>Recurring Charges</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="addon in addons">
+        <td>{{ addon.name }} </td>
+        <td><span ng-repeat="charge in addon.charges" ng-if="charge.type == 'OneTime'">{{ charge.pricing }}</span></td>
+        <td><span ng-repeat="charge in addon.charges" ng-if="charge.type == 'Recurring'">{{ charge.pricing }}</span></td>
+        <td>
+            <button class="btn btn-success" ng-click="chooseAddon(addon)" ng-if="!isSelectedAddon(addon.zid)">+</button>
+            <button class="btn btn-danger" ng-click="removeAddon(addon)" ng-if="isSelectedAddon(addon.zid)">-</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html ng-app="sparrowApp">
+<head>
+    <title>6 Hours Implementation Demo Site</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/site.css" rel="stylesheet" media="screen">
+
+    <script type="text/javascript" src="libs/angular.js"></script>
+    <script type="text/javascript" src="libs/angular-route.js"></script>
+    <script language="JavaScript">
+        var sparrowApp = angular.module('sparrowApp', [ 'ngRoute' ]);
+
+        // Router
+        sparrowApp.config(function ($routeProvider) {
+            $routeProvider.
+                    when('/pricing', {
+                        templateUrl: 'pages/plan-list.html',
+                        controller: 'PlanListCtrl'
+                    }).
+                    when('/addons', {
+                        templateUrl: 'pages/addon-list.html',
+                        controller: 'PlanListCtrl'
+                    }).
+                    when('/signup', {
+                        templateUrl: 'pages/signup.html',
+                        controller: 'PlanListCtrl'
+                    }).
+                    when('/billing', {
+                        templateUrl: 'pages/billing.html',
+                        controller: 'CardCtrl'
+                    }).
+                    when('/account-subscription', {
+                        templateUrl: 'pages/account-subscription.html',
+                        controller: 'SubscriptionCtrl'
+                    }).
+                    when('/account-summary', {
+                        templateUrl: 'pages/account-summary.html',
+                        controller: 'AccountCtrl'
+                    }).otherwise({
+                        redirectTo: '/pricing'
+                    });
+        });
+
+        // Services
+        sparrowApp.factory('Plans', function ($http) {
+            var regData = {
+                plan: {},
+                addOns: []
+            };
+
+            function getData(callback) {
+                $http({
+                    method: 'GET',
+                    url: 'data/plans.json',
+                    cache: true
+                }).success(callback);
+            }
+
+            return {
+                list: getData,
+                getRegData: function() {
+                    return regData;
+                },
+                choosePlan: function (plan) {
+                    regData.plan = plan;
+                },
+                chooseAddon: function (addon) {
+                    regData.addOns.push(addon);
+                },
+                isSelectedAddon: function(addonId) {
+                    return regData.addOns.some(function(x) { return x.zid == addonId; });
+                },
+                isSelectedPlan: function(planId) {
+                    return regData.plan.zid == planId;
+                },
+                removeAddon: function(addon) {
+                    for (var i=0; i<regData.addOns.length; i++) {
+                        if (regData.addOns[i] == addon) {
+                            regData.addOns.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
+        // Controllers
+        sparrowApp.controller('PlanListCtrl', function ($scope, Plans) {
+            Plans.list(function (data) {
+                if (data && data.success) {
+                    $scope.plans = data.plans;
+                    $scope.addons = data.addons;
+                    $scope.addonListTableUrl = "pages/addon-list-table.html";
+                }
+            });
+
+            $scope.choosePlan = Plans.choosePlan;
+
+            $scope.chooseAddon = Plans.chooseAddon;
+
+            $scope.isSelectedAddon = Plans.isSelectedAddon;
+
+            $scope.removeAddon = Plans.removeAddon;
+        });
+
+        sparrowApp.controller('CardCtrl', function ($scope, $http, $location) {
+
+            $scope.card = {
+                "accountId": 1,     // id of local system
+                "accountKey": "A00000001",
+                "creditCardType": "Visa",  // set an invalid value on purpose to show the error handling.
+                "creditCardNumber": "4111111111111111",
+                "expirationMonth": "10",
+                "expirationYear": "2015",
+                "securityCode": "111",
+                "defaultPaymentMethod": true
+            };
+
+            $scope.years = ["2013", "2014", "2015", "2016", "2017", "2018", "2019"];
+            $scope.monthes = ["1","2","3","4","5","6","7","8","9","10","11","12"];
+            $scope.countries = ["China", "United States"];
+
+            $scope.makeCorsRequest = function() {
+                // clear error message
+                for (var i = 1; i<= 11; i++)
+                    $('#field_' + i + '_error').html("");
+                $location.path("/account-summary");
+                //generateSignature($scope.card.accountId, callZuora);
+            };
+
+            function callZuora(data) {
+                if (!data.success){
+                    showError("Zuora responds failure when creating signature:" + JSON.stringify(data));
+                    return;
+                }
+
+                $http({
+                    method: 'POST',
+                    url: 'https://apisandbox-api.zuora.com/rest/v1/accounts',
+                    //url: 'http://localhost:8080/apps/v1/payment-methods/credit-cards',
+
+                    withCredentials: true,
+                    headers: {
+                        accept: 'application/json',
+                        contentType: 'application/json',
+                        token: data.token,
+                        signature: data.signature
+                    },
+
+                    data: JSON.stringify(cloneCard($scope.card))
+                }).success(function(data) {
+                    if (data.success) {
+                        // refresh card list
+                        $http.get('/listCards/' + $scope.card.accountId).success(function(data){
+                            $scope.cardList = data.creditCards;
+                        });
+                    }else {
+                        // Error handling
+                        for (var rIdx in data.reasons) {
+                            var reason = data.reasons[rIdx];
+                            var fieldCode = Math.floor(reason.code / 100) % 100;
+                            $('#field_' + fieldCode + '_error').html(reason.message);
+                        }
+                    }
+                }).error(function() {
+                    showError("failed to call zuora REST API");
+                });
+
+                function cloneCard(card) {
+                    var newCard = angular.copy(card);
+                    delete newCard.accountId;
+                    return newCard;
+                }
+
+                function generateSignature(accountId, callback) {
+                    $http.get("/signature/" + accountId)
+                            .success(callback)
+                            .error(function(){
+                                showError("failed to generate signature.");
+                            })
+                };
+
+                function showError(msg){
+                    alert(msg);
+                };
+            };
+        });
+
+        sparrowApp.controller('AccountCtrl', function($scope, $http){
+            $scope.sideBarUrl = "pages/side-bar.html";
+
+            $http.get("data/account_status.json").success(function(data){
+                if (data && data.success){
+                    $scope.accountStatus = data.accountStatus;
+                }
+            });
+
+            $http.get("data/billing_info.json").success(function(data){
+                if (data && data.success){
+                    $scope.billingInfo = data.billingInfo;
+                }
+            });
+
+            $http.get("data/payment_info.json").success(function(data){
+                if (data && data.success){
+                    $scope.creditCards = data.creditCards;
+                }
+            });
+        } );
+
+        sparrowApp.controller('SubscriptionCtrl', function($scope, $http, Plans){
+            $scope.sideBarUrl = "pages/side-bar.html";
+            $scope.addonListTableUrl = "pages/addon-list-table.html";
+            $scope.planListTableUrl = "pages/plan-list-table.html";
+
+            $http.get("data/subscription.json").success(function(data){
+                if (data && data.success){
+                    $scope.subscription = data.subscription;
+                    Plans.getRegData().plan = { "zid": data.subscription.planId };
+                    if (data.subscription.addons && data.subscription.addons.length > 0) {
+                        // clear cache and use backend data to decide the 'real' selected plans
+                        Plans.getRegData().addOns = [];
+                        for (var i=0; i<data.subscription.addons.length; i++){
+                            Plans.getRegData().addOns.push({ "zid": data.subscription.addons[i] });
+                        }
+                    }
+                }
+            });
+
+            Plans.list(function (data) {
+                if (data && data.success) {
+                    $scope.plans = data.plans;
+                    $scope.addons = data.addons;
+                }
+            });
+
+            $scope.choosePlan = Plans.choosePlan;
+
+            $scope.chooseAddon = Plans.chooseAddon;
+
+            $scope.isSelectedAddon = Plans.isSelectedAddon;
+
+            $scope.isSelectedPlan = Plans.isSelectedPlan;
+
+            $scope.removeAddon = Plans.removeAddon;
+        } );
+
+        sparrowApp.controller('SelectedPlanCtrl', function($scope, Plans){
+            $scope.pageUrl = "pages/selected-plan.html";
+            $scope.chosePlan = function(){
+                return Plans.getRegData().plan;
+            };
+
+            $scope.choseAddon = function(){
+                return Plans.getRegData().addOns;
+            };
+        });
+    </script>
+</head>
+<body>
+<div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="#/pricing">Plans</a></li>
+            <li><a href="#/account-summary">Self Service</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container" ng-view></div>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="libs/jquery-1.9.0.min.js"></script>
+</body>
+</html>

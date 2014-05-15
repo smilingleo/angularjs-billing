@@ -1,0 +1,108 @@
+{
+    "success": true,
+    "plans": [
+    {
+        "zid": "2c92c0f845df71220145fd1bbed66a84",
+        "name": "Bronze",
+        "description": "This plan is pretty good",
+        "charges": [
+            {
+                "zid": "2c92c0f845df71290145fd1cd25d62a1",
+                "name": "Setup Fee",
+                "type": "OneTime",
+                "pricing": "$100"
+            },
+            {
+                "zid": "2c92c0f845df71270145fd1e57024b6a",
+                "name": "Service Charge",
+                "type": "Recurring",
+                "pricing": "$20 per month"
+            },
+            {
+                "zid": "2c92c0f845df71270145fd1f30994f32",
+                "name": "User Management",
+                "type": "Recurring",
+                "pricing": "$5 per month for each user"
+            }
+        ]
+    },
+    {
+        "zid": "2c92c0f945df79e90145fd1f5d067d0a",
+        "name": "Silver",
+        "description": "This plan is even better",
+        "charges": [
+            {
+                "zid": "2c92c0f945df79e90145fd1f5ea37d30",
+                "type": "OneTime",
+                "name": "Setup Fee",
+                "pricing": "$200"
+            },
+            {
+                "zid": "2c92c0f945df79e90145fd1f5d5d7d0c",
+                "type": "Recurring",
+                "name": "Service Charge",
+                "pricing": "$50 per month"
+            },
+            {
+                "zid": "2c92c0f945df79e90145fd1f5dff7d1e",
+                "name": "User Management",
+                "type": "Recurring",
+                "pricing": "$10 per month for each user"
+            }
+        ]
+    },
+    {
+        "zid": "2c92c0f945df79e90145fd20728f040b",
+        "name": "Gold",
+        "description": "This plan is the best",
+        "charges": [
+            {
+                "zid": "2c92c0f945df79e90145fd2073d10440",
+                "type": "OneTime",
+                "name": "Setup Fee",
+                "pricing": "$300"
+            },
+            {
+                "zid": "2c92c0f945df79e90145fd2072ba040d",
+                "type": "Recurring",
+                "name": "Service Charge",
+                "pricing": "$200 per month"
+            },
+            {
+                "zid": "2c92c0f945df79e90145fd20733f041f",
+                "type": "Recurring",
+                "name": "User Management",
+                "pricing": "$20 per month for each user"
+            }
+        ]
+    }
+],
+    "addons": [
+    {
+        "zid": "2c92c0f845df71270145fd23891c6b4f",
+        "name": "Premium Support",
+        "description": "",
+        "charges": [
+            {
+                "zid": "2c92c0f945df79e90145fd2421301748",
+                "type": "Recurring",
+                "name": "Support Charge",
+                "pricing": " $50 per month"
+            }
+        ]
+    },
+    {
+        "zid": "2c92c0f945df79e50145fd247a6e46bb",
+        "name": "Data Migration",
+        "description": "",
+        "charges": [
+            {
+                "zid": "2c92c0f945df79e50145fd24c93b4832",
+                "type": "OneTime",
+                "name": "Migration Charge",
+                "pricing": "$250"
+            }
+        ]
+    }
+]
+}
